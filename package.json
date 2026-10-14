@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "todo-tracker.helloWorld",
-        "title": "Hello World"
+        "command": "todo-tracker.scanFile",
+        "title": "TODO Tracker: Scan Current File"
       }
     ]
   },
