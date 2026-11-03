@@ -4,7 +4,7 @@ export interface TodoItem {
 	line: number;
 }
 
-const TAG_REGEX = /\b(TODO|FIXME)\b:?\s*(.*)/;
+const TAG_REGEX = /(?:\/\/+|\/\*+|^\s*\*+|#+|--+|;+|<!--)\s*(TODO|FIXME)\b:?\s*(.*)/;
 
 export function findTodos(text: string): TodoItem[] {
 	const result: TodoItem[] = [];
@@ -16,7 +16,7 @@ export function findTodos(text: string): TodoItem[] {
 		if (match !== null) {
 			result.push({
 				tag: match[1],
-				text: match[2].trim(),
+				text: match[2].replace(/\s*(?:\*\/|-->)\s*$/, '').trim(),
 				line: i,
 			});
 		}
