@@ -21,6 +21,11 @@
         "command": "todo-tracker.refresh",
         "title": "TODO Tracker: Refresh",
         "icon": "$(refresh)"
+      },
+      {
+        "command": "todo-tracker.search",
+        "title": "TODO Tracker: Search",
+        "icon": "$(search)"
       }
     ],
     "viewsContainers": {
@@ -44,9 +49,14 @@
     "menus": {
       "view/title": [
         {
+          "command": "todo-tracker.search",
+          "when": "view == todo-tracker.todoView",
+          "group": "navigation@1"
+        },
+        {
           "command": "todo-tracker.refresh",
           "when": "view == todo-tracker.todoView",
-          "group": "navigation"
+          "group": "navigation@2"
         }
       ]
     }

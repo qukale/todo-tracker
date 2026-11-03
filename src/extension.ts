@@ -26,8 +26,21 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showInformationMessage(`Найдено пометок: ${todos.length}`);
 	});
 
+	const search = vscode.commands.registerCommand('todo-tracker.search', async () => {
+		const query = await vscode.window.showInputBox({
+			title: 'Поиск по пометкам',
+			prompt: 'Текст или метка, например FIXME. Пустой запрос покажет все пометки',
+			value: treeProvider.getFilter(),
+		});
+
+		if (query !== undefined) {
+			treeProvider.setFilter(query);
+		}
+	});
+
 	context.subscriptions.push(
 		scanFile,
+		search,
 		output,
 		vscode.window.registerTreeDataProvider('todo-tracker.todoView', treeProvider),
 		vscode.commands.registerCommand('todo-tracker.refresh', () => treeProvider.refresh()),

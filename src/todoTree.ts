@@ -50,6 +50,10 @@ export class TodoTreeProvider implements vscode.TreeDataProvider<TreeNode> {
 		this.refresh();
 	}
 
+    getFilter(): string {
+		return this.filter;
+	}
+
 	getTreeItem(element: TreeNode): vscode.TreeItem {
 		return element;
 	}
