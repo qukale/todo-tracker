@@ -39,8 +39,15 @@ export class TodoTreeProvider implements vscode.TreeDataProvider<TreeNode> {
     private readonly changeEmitter = new vscode.EventEmitter<TreeNode | undefined>();
 	readonly onDidChangeTreeData = this.changeEmitter.event;
 
+    private filter = '';
+
 	refresh(): void {
 		this.changeEmitter.fire(undefined);
+	}
+
+    setFilter(value: string): void {
+		this.filter = value.trim().toLowerCase();
+		this.refresh();
 	}
 
 	getTreeItem(element: TreeNode): vscode.TreeItem {
@@ -71,7 +78,9 @@ export class TodoTreeProvider implements vscode.TreeDataProvider<TreeNode> {
 					continue;
 				}
 
-				const todos = findTodos(decoder.decode(bytes));
+				const todos = findTodos(decoder.decode(bytes)).filter((todo) =>
+					`${todo.tag} ${todo.text}`.toLowerCase().includes(this.filter),
+				);
 				if (todos.length > 0) {
 					nodes.push(new FileNode(uri, todos));
 				}
