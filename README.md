@@ -1,71 +1,67 @@
-# todo-tracker README
+# TODO Tracker
 
-This is the README for your extension "todo-tracker". After writing up a brief description, we recommend including the following sections.
+Расширение для VS Code, которое находит в проекте комментарии `TODO` и `FIXME` и показывает их в отдельной панели.
 
-## Features
+## Возможности
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Дерево пометок:** в боковой панели показаны файлы с пометками и сами пометки с номерами строк.
+- **Переход к коду:** клик по пометке открывает файл на нужной строке.
+- **Поиск:** можно отфильтровать пометки по тексту или метке без учёта регистра.
+- **Обновление:** дерево обновляется при сохранении файла и по кнопке в заголовке панели.
+- **Сканирование текущего файла:** отдельная команда выводит пометки открытого файла во вкладку Output.
 
-For example if there is an image subfolder under your extension project workspace:
+## Какие комментарии находятся
 
-\!\[feature X\]\(images/feature-x.png\)
+Метка пишется заглавными буквами и должна стоять сразу после начала комментария. Двоеточие после неё необязательно.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+```ts
+// TODO: добавить проверку ввода
+/* FIXME: падает при пустом файле */
+```
 
-## Requirements
+```python
+# TODO: переписать функцию
+```
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+```html
+<!-- FIXME: поправить вёрстку -->
+```
 
-## Extension Settings
+Поддерживаются комментарии, начинающиеся с `//`, `/*`, `*`, `#`, `--`, `;` и `<!--`.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## Использование
 
-For example:
+1. Откройте папку с проектом и нажмите на значок TODO Tracker на боковой панели.
+2. Нажмите на пометку, чтобы перейти к ней в коде.
+3. Нажмите на лупу в заголовке панели и введите запрос, чтобы найти нужные пометки.
+4. Нажмите на крестик, чтобы сбросить поиск.
 
-This extension contributes the following settings:
+## Команды
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+Команды доступны через палитру (`Cmd+Shift+P` на macOS, `Ctrl+Shift+P` на Windows и Linux).
 
-## Known Issues
+| Команда | Что делает |
+| --- | --- |
+| `TODO Tracker: Scan Current File` | Выводит пометки открытого файла во вкладку Output |
+| `TODO Tracker: Search` | Открывает поиск по пометкам |
+| `TODO Tracker: Clear Search` | Сбрасывает поиск |
+| `TODO Tracker: Refresh` | Обновляет дерево |
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Ограничения
 
-## Release Notes
+- Метки в нижнем регистре и метки в середине комментария не находятся: `// todo` и `// см. TODO` будут пропущены.
+- Дерево читает файлы с диска, поэтому несохранённые изменения в нём не видны.
+- Папки `node_modules`, `out`, `dist`, `build`, `.git` и `.vscode-test` не сканируются.
+- За одно сканирование обрабатывается не больше 2000 файлов.
 
-Users appreciate release notes as you update your extension.
+## Запуск из исходников
 
-### 1.0.0
+Нужны Node.js и VS Code версии 1.140 или новее.
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+1. Склонируйте репозиторий и перейдите в его папку.
+2. Установите зависимости:
+   ```bash
+   npm install
+   ```
+3. Откройте папку в VS Code и нажмите `F5`.
+4. В открывшемся окне **Extension Development Host** откройте любую папку с кодом.
