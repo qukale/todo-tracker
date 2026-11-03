@@ -10,7 +10,11 @@ export class FileNode extends vscode.TreeItem {
 		public readonly todos: TodoItem[],
 	) {
 		super(uri, vscode.TreeItemCollapsibleState.Expanded);
-		this.description = `${vscode.workspace.asRelativePath(uri)} (${todos.length})`;
+
+		const relativePath = vscode.workspace.asRelativePath(uri);
+		const slashIndex = relativePath.lastIndexOf('/');
+		const folder = slashIndex === -1 ? '' : `${relativePath.slice(0, slashIndex)} `;
+		this.description = `${folder}(${todos.length})`;
 	}
 }
 
@@ -38,7 +42,7 @@ export class TodoTreeProvider implements vscode.TreeDataProvider<TreeNode> {
 	refresh(): void {
 		this.changeEmitter.fire(undefined);
 	}
-    
+
 	getTreeItem(element: TreeNode): vscode.TreeItem {
 		return element;
 	}
