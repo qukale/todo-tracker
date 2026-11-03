@@ -15,10 +15,17 @@ export class FileNode extends vscode.TreeItem {
 }
 
 export class TodoNode extends vscode.TreeItem {
-	constructor(todo: TodoItem) {
+	constructor(uri: vscode.Uri, todo: TodoItem) {
 		super(`[${todo.tag}] ${todo.text || '(без текста)'}`, vscode.TreeItemCollapsibleState.None);
 		this.description = `строка ${todo.line + 1}`;
 		this.iconPath = new vscode.ThemeIcon(todo.tag === 'FIXME' ? 'warning' : 'checklist');
+
+		const position = new vscode.Position(todo.line, 0);
+		this.command = {
+			command: 'vscode.open',
+			title: 'Открыть',
+			arguments: [uri, { selection: new vscode.Range(position, position) }],
+		};
 	}
 }
 
@@ -35,7 +42,7 @@ export class TodoTreeProvider implements vscode.TreeDataProvider<TreeNode> {
 		}
 
 		if (element instanceof FileNode) {
-			return element.todos.map((todo) => new TodoNode(todo));
+			return element.todos.map((todo) => new TodoNode(element.uri, todo));
 		}
 
 		return [];
