@@ -38,6 +38,8 @@ type TreeNode = FileNode | TodoNode;
 export class TodoTreeProvider implements vscode.TreeDataProvider<TreeNode> {
     private readonly changeEmitter = new vscode.EventEmitter<TreeNode | undefined>();
 	readonly onDidChangeTreeData = this.changeEmitter.event;
+    private readonly scanEmitter = new vscode.EventEmitter<number>();
+	readonly onDidScan = this.scanEmitter.event;
 
     private filter = '';
 
@@ -91,7 +93,8 @@ export class TodoTreeProvider implements vscode.TreeDataProvider<TreeNode> {
 			} catch {
 			}
 		}
-
+        
+        this.scanEmitter.fire(nodes.length);
 		return nodes.sort((a, b) => a.uri.path.localeCompare(b.uri.path));
 	}
 }

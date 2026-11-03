@@ -26,6 +26,11 @@
         "command": "todo-tracker.search",
         "title": "TODO Tracker: Search",
         "icon": "$(search)"
+      },
+      {
+        "command": "todo-tracker.clearSearch",
+        "title": "TODO Tracker: Clear Search",
+        "icon": "$(close)"
       }
     ],
     "viewsContainers": {
@@ -54,9 +59,14 @@
           "group": "navigation@1"
         },
         {
+          "command": "todo-tracker.clearSearch",
+          "when": "view == todo-tracker.todoView && todo-tracker.filterActive",
+          "group": "navigation@2"
+        },
+        {
           "command": "todo-tracker.refresh",
           "when": "view == todo-tracker.todoView",
-          "group": "navigation@2"
+          "group": "navigation@3"
         }
       ]
     }

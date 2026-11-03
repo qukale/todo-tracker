@@ -6,6 +6,19 @@ export function activate(context: vscode.ExtensionContext) {
 	const output = vscode.window.createOutputChannel('TODO Tracker');
 	const treeProvider = new TodoTreeProvider();
 
+	const treeView = vscode.window.createTreeView('todo-tracker.todoView', {
+		treeDataProvider: treeProvider,
+	});
+
+	const applyFilter = (query: string) => {
+		treeProvider.setFilter(query);
+
+		const filter = treeProvider.getFilter();
+		treeView.description = filter === '' ? undefined : `поиск: ${filter}`;
+
+		vscode.commands.executeCommand('setContext', 'todo-tracker.filterActive', filter !== '');
+	};
+
 	const scanFile = vscode.commands.registerCommand('todo-tracker.scanFile', () => {
 		const editor = vscode.window.activeTextEditor;
 
@@ -34,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 
 		if (query !== undefined) {
-			treeProvider.setFilter(query);
+			applyFilter(query);
 		}
 	});
 
@@ -42,9 +55,14 @@ export function activate(context: vscode.ExtensionContext) {
 		scanFile,
 		search,
 		output,
-		vscode.window.registerTreeDataProvider('todo-tracker.todoView', treeProvider),
+		treeView,
+		vscode.commands.registerCommand('todo-tracker.clearSearch', () => applyFilter('')),
 		vscode.commands.registerCommand('todo-tracker.refresh', () => treeProvider.refresh()),
 		vscode.workspace.onDidSaveTextDocument(() => treeProvider.refresh()),
+		treeProvider.onDidScan((fileCount) => {
+			const filter = treeProvider.getFilter();
+			treeView.message = filter !== '' && fileCount === 0 ? `Ничего не найдено: ${filter}` : undefined;
+		}),
 	);
 }
 
