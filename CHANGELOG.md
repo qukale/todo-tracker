@@ -1,9 +1,18 @@
-# Change Log
+# Журнал изменений
 
-All notable changes to the "todo-tracker" extension will be documented in this file.
+Все заметные изменения в расширении TODO Tracker описываются в этом файле.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+Формат основан на [Keep a Changelog](https://keepachangelog.com/ru/1.1.0/).
 
-## [Unreleased]
+## [0.0.1] - 2026-11-03
 
-- Initial release
+### Добавлено
+
+- Поиск комментариев `TODO` и `FIXME` в файлах проекта.
+- Команда сканирования текущего файла с выводом результата во вкладку Output.
+- Панель с деревом файлов и пометок.
+- Переход к пометке в коде по клику.
+- Обновление дерева при сохранении файла и по кнопке в заголовке панели.
+- Поиск по тексту и метке без учёта регистра.
+- Показ текущего запроса, сообщение об отсутствии результатов и кнопка сброса поиска.
+- Описание расширения в README.
