@@ -17,7 +17,25 @@
         "command": "todo-tracker.scanFile",
         "title": "TODO Tracker: Scan Current File"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "todo-tracker",
+          "title": "TODO Tracker",
+          "icon": "$(checklist)"
+        }
+      ]
+    },
+    "views": {
+      "todo-tracker": [
+        {
+          "id": "todo-tracker.todoView",
+          "name": "Пометки",
+          "icon": "$(checklist)"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

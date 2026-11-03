@@ -1,10 +1,12 @@
 import * as vscode from 'vscode';
 import { findTodos } from './scanner';
+import { TodoTreeProvider } from './todoTree';
 
 export function activate(context: vscode.ExtensionContext) {
 	const output = vscode.window.createOutputChannel('TODO Tracker');
+	const treeProvider = new TodoTreeProvider();
 
-	const disposable = vscode.commands.registerCommand('todo-tracker.scanFile', () => {
+	const scanFile = vscode.commands.registerCommand('todo-tracker.scanFile', () => {
 		const editor = vscode.window.activeTextEditor;
 
 		if (editor === undefined) {
@@ -24,7 +26,11 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showInformationMessage(`Найдено пометок: ${todos.length}`);
 	});
 
-	context.subscriptions.push(disposable, output);
+	context.subscriptions.push(
+		scanFile,
+		output,
+		vscode.window.registerTreeDataProvider('todo-tracker.todoView', treeProvider),
+	);
 }
 
 export function deactivate() {}
