@@ -30,6 +30,8 @@ export function activate(context: vscode.ExtensionContext) {
 		scanFile,
 		output,
 		vscode.window.registerTreeDataProvider('todo-tracker.todoView', treeProvider),
+		vscode.commands.registerCommand('todo-tracker.refresh', () => treeProvider.refresh()),
+		vscode.workspace.onDidSaveTextDocument(() => treeProvider.refresh()),
 	);
 }
 

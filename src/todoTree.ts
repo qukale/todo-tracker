@@ -32,6 +32,13 @@ export class TodoNode extends vscode.TreeItem {
 type TreeNode = FileNode | TodoNode;
 
 export class TodoTreeProvider implements vscode.TreeDataProvider<TreeNode> {
+    private readonly changeEmitter = new vscode.EventEmitter<TreeNode | undefined>();
+	readonly onDidChangeTreeData = this.changeEmitter.event;
+
+	refresh(): void {
+		this.changeEmitter.fire(undefined);
+	}
+    
 	getTreeItem(element: TreeNode): vscode.TreeItem {
 		return element;
 	}

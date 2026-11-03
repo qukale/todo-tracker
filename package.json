@@ -16,6 +16,11 @@
       {
         "command": "todo-tracker.scanFile",
         "title": "TODO Tracker: Scan Current File"
+      },
+      {
+        "command": "todo-tracker.refresh",
+        "title": "TODO Tracker: Refresh",
+        "icon": "$(refresh)"
       }
     ],
     "viewsContainers": {
@@ -33,6 +38,15 @@
           "id": "todo-tracker.todoView",
           "name": "Пометки",
           "icon": "$(checklist)"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "todo-tracker.refresh",
+          "when": "view == todo-tracker.todoView",
+          "group": "navigation"
         }
       ]
     }
